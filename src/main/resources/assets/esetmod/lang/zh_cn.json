@@ -1,0 +1,19 @@
+{
+	"item.esetmod.record_stick": "记录木棍",
+	"item.esetmod.record_stick.tooltip.1": "右键点击方块，按点击顺序记录",
+	"item.esetmod.record_stick.tooltip.2": "使用 /setmod start 回放记录",
+	"setmod.message.recorded": "已记录 %1$s 个方块",
+	"setmod.message.updated": "该方块已记录（共 %1$s 个方块）",
+	"setmod.message.limit": "记录数量已达上限（%1$s 个方块）",
+	"setmod.message.playback.begin": "开始回放 %1$s 个方块，用时 %2$s tick",
+	"setmod.message.playback.finished": "回放完成（%1$s 个方块）",
+	"setmod.command.usage": "/setmod start —— 清除已记录方块，随后回放 | /setmod speed [tick] —— 设置整段动画时长 | /setmod clear —— 清除所有记录",
+	"setmod.command.start.empty": "还没有记录方块，请先用记录木棍右键点击方块",
+	"setmod.command.start.started": "共记录 %1$s 个方块，已清除 %2$s 个；%3$s tick 后开始回放，动画时长 %4$s tick",
+	"setmod.command.speed.get": "当前动画时长：%1$s tick（已记录 %2$s 个方块）",
+	"setmod.command.speed.default": "当前动画时长：默认 %1$s tick（已记录 %2$s 个方块）",
+	"setmod.command.speed.set": "动画时长已设为 %1$s tick（已记录 %2$s 个方块）",
+	"setmod.command.speed.running": "已有回放在进行，新时长将在下一次 /setmod start 时生效",
+	"setmod.command.clear.done": "已清除 %1$s 个方块记录",
+	"setmod.command.clear.cancelled": "已取消正在进行的回放"
+}

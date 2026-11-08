@@ -1,0 +1,26 @@
+{
+	"schemaVersion": 1,
+	"id": "esetmod",
+	"version": "${version}",
+	"name": "eSetMod",
+	"description": "A stick that records every block you right-click with it, then clears and replays that recording through /setmod.",
+	"authors": [
+		"electrondz75",
+		"DeepSeek-V4.1-Flash - DeepSeek Harness API"
+	],
+	"contact": {},
+	"license": "MIT",
+	"icon": "assets/esetmod/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.electrondz75.setmod.SetMod"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.15.0",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}

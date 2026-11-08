@@ -1,0 +1,19 @@
+{
+	"item.esetmod.record_stick": "Record Stick",
+	"item.esetmod.record_stick.tooltip.1": "Right-click blocks to record them, in the order you click",
+	"item.esetmod.record_stick.tooltip.2": "Replay the recording with /setmod start",
+	"setmod.message.recorded": "Recorded %1$s block(s)",
+	"setmod.message.updated": "This block is already recorded (%1$s block(s) total)",
+	"setmod.message.limit": "Record limit reached (%1$s blocks)",
+	"setmod.message.playback.begin": "Replaying %1$s block(s) over %2$s tick(s)",
+	"setmod.message.playback.finished": "Playback finished (%1$s block(s))",
+	"setmod.command.usage": "/setmod start - clear the recorded blocks, then replay them | /setmod speed [ticks] - set the total animation length | /setmod clear - delete every record",
+	"setmod.command.start.empty": "No blocks recorded yet. Right-click blocks with the Record Stick first.",
+	"setmod.command.start.started": "%1$s block(s) recorded, %2$s cleared; replay starts in %3$s ticks and lasts %4$s ticks",
+	"setmod.command.speed.get": "Animation length: %1$s ticks (%2$s recorded block(s))",
+	"setmod.command.speed.default": "Animation length: default, %1$s ticks for %2$s recorded block(s)",
+	"setmod.command.speed.set": "Animation length set to %1$s ticks (%2$s recorded block(s))",
+	"setmod.command.speed.running": "A playback is already running; the new length applies from the next /setmod start",
+	"setmod.command.clear.done": "Cleared %1$s recorded block(s)",
+	"setmod.command.clear.cancelled": "Running playback cancelled"
+}
