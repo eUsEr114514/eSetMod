@@ -5,7 +5,7 @@
 	"name": "eSetMod",
 	"description": "A stick that records every block you right-click with it, then clears and replays that recording through /setmod.",
 	"authors": [
-		"electrondz75",
+		"electrondz75"
 	],
 	"contact": {},
 	"license": "MIT",

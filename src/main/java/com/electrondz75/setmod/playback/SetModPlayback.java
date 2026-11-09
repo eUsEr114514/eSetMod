@@ -32,7 +32,7 @@ import net.minecraft.text.Text;
  */
 public final class SetModPlayback {
 	/** Ticks between {@code /setmod start} and the first placed block. */
-	public static final int START_DELAY_TICKS = 120;
+	public static final int START_DELAY_TICKS = 20;
 
 	private static final List<Job> JOBS = new ArrayList<>();
 
