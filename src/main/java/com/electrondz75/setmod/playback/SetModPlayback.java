@@ -17,18 +17,22 @@ import net.minecraft.text.Text;
 /**
  * Server side scheduler that clears a recording and then replays it block by block.
  *
- * <p>Timeline of {@code /setmod start}:</p>
+ * <p>Timeline of {@code /setmod start <name>}:</p>
  * <ol>
- *     <li>every recorded block that still holds its recorded state is removed (set to air);</li>
+ *     <li>every block of that recording that still holds its recorded state is removed (set to
+ *         air);</li>
  *     <li>after {@value #START_DELAY_TICKS} ticks the animation begins;</li>
  *     <li>the recorded blocks are placed again, one {@code setblock} at a time, strictly in
  *         recording order, until the configured total duration has elapsed;</li>
  *     <li>the placed blocks are kept - nothing is removed after playback.</li>
  * </ol>
+ *
+ * <p>Every job belongs to one named recording, so different recordings of the same player can be
+ * replayed independently.</p>
  */
 public final class SetModPlayback {
 	/** Ticks between {@code /setmod start} and the first placed block. */
-	public static final int START_DELAY_TICKS = 20;
+	public static final int START_DELAY_TICKS = 120;
 
 	private static final List<Job> JOBS = new ArrayList<>();
 
@@ -36,24 +40,26 @@ public final class SetModPlayback {
 	}
 
 	/**
-	 * Starts a playback for the given player, replacing any playback that is still running for them.
+	 * Starts a playback of one named recording, replacing a playback of the same recording that is
+	 * still running.
 	 *
+	 * @param recordingName the name shown in the playback messages
 	 * @param blocks        immutable snapshot of the recording, in click order
 	 * @param durationTicks total length of the animation, in ticks
 	 */
-	public static void start(MinecraftServer server, UUID playerId, List<RecordedBlock> blocks, int durationTicks) {
-		cancel(playerId);
-		JOBS.add(new Job(playerId, List.copyOf(blocks), Math.max(1, durationTicks)));
+	public static void start(MinecraftServer server, UUID playerId, String recordingName, List<RecordedBlock> blocks, int durationTicks) {
+		cancel(playerId, recordingName);
+		JOBS.add(new Job(playerId, recordingName, List.copyOf(blocks), Math.max(1, durationTicks)));
 	}
 
-	/** Cancels the player's playback, if any. */
-	public static boolean cancel(UUID playerId) {
-		return JOBS.removeIf(job -> job.playerId.equals(playerId));
+	/** Cancels the playback of one recording, if it is running. */
+	public static boolean cancel(UUID playerId, String recordingName) {
+		return JOBS.removeIf(job -> job.playerId.equals(playerId) && job.recordingName.equals(recordingName));
 	}
 
-	public static boolean isRunning(UUID playerId) {
+	public static boolean isRunning(UUID playerId, String recordingName) {
 		for (Job job : JOBS) {
-			if (job.playerId.equals(playerId)) {
+			if (job.playerId.equals(playerId) && job.recordingName.equals(recordingName)) {
 				return true;
 			}
 		}
@@ -135,6 +141,7 @@ public final class SetModPlayback {
 
 	private static final class Job {
 		private final UUID playerId;
+		private final String recordingName;
 		private final List<RecordedBlock> blocks;
 		private final int durationTicks;
 
@@ -142,8 +149,9 @@ public final class SetModPlayback {
 		private int elapsedTicks;
 		private int placedBlocks;
 
-		private Job(UUID playerId, List<RecordedBlock> blocks, int durationTicks) {
+		private Job(UUID playerId, String recordingName, List<RecordedBlock> blocks, int durationTicks) {
 			this.playerId = playerId;
+			this.recordingName = recordingName;
 			this.blocks = blocks;
 			this.durationTicks = durationTicks;
 		}
@@ -154,7 +162,8 @@ public final class SetModPlayback {
 				remainingDelay--;
 
 				if (remainingDelay == 0) {
-					notifyPlayer(server, playerId, Text.translatable("setmod.message.playback.begin", blocks.size(), durationTicks));
+					notifyPlayer(server, playerId, Text.translatable("setmod.message.playback.begin",
+							recordingName, blocks.size(), durationTicks));
 				}
 
 				return false;
@@ -173,7 +182,8 @@ public final class SetModPlayback {
 			}
 
 			if (elapsedTicks >= durationTicks) {
-				notifyPlayer(server, playerId, Text.translatable("setmod.message.playback.finished", blocks.size()));
+				notifyPlayer(server, playerId, Text.translatable("setmod.message.playback.finished",
+						recordingName, blocks.size()));
 				return true;
 			}
 

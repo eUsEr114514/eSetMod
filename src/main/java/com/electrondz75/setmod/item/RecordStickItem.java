@@ -54,7 +54,7 @@ public class RecordStickItem extends Item {
 
 		SetModState modState = SetModState.get(serverWorld.getServer());
 		SetModState.RecordResult result = modState.addRecord(serverPlayer.getUuid(), recorded);
-		int total = modState.getRecordCount(serverPlayer.getUuid());
+		int total = modState.getPendingCount(serverPlayer.getUuid());
 
 		switch (result) {
 			case ADDED -> serverPlayer.sendMessage(Text.translatable("setmod.message.recorded", total), true);
